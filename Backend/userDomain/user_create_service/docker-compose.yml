@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  user-service:
+    build: .
+    container_name: user_create_service
+    ports:
+      - "8000:8000"
+    depends_on:
+      - mysql-db
+    environment:
+      DB_HOST: mysql-db
+      DB_PORT: 3306
+      DB_USER: root
+      DB_PASSWORD: root123
+      DB_NAME: users_db
+    volumes:
+      - .:/app
+
+  mysql-db:
+    image: mysql:8.0
+    container_name: mysql_users_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root123
+      MYSQL_DATABASE: users_db
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+volumes:
+  mysql_data:

@@ -1,28 +1,30 @@
 package com.usuario.service;
 
+import com.usuario.dto.UserInput;
 import com.usuario.model.User;
 import com.usuario.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
 public class UserService {
-    private final UserRepository repo;
 
-    public UserService(UserRepository repo) {
-        this.repo = repo;
-    }
+    @Autowired
+    private UserRepository userRepository;
 
-    public User updateUser(Long id, User userDetails) throws Exception {
-        Optional<User> userOptional = repo.findById(id);
-        if (!userOptional.isPresent()) {
-            throw new Exception("User not found");
+    public User updateUser(Long id, UserInput userInput) {
+        Optional<User> optionalUser = userRepository.findById(id);
+        if (!optionalUser.isPresent()) {
+            throw new RuntimeException("User not found");
         }
-        User user = userOptional.get();
-        user.setName(userDetails.getName());
-        user.setEmail(userDetails.getEmail());
-        user.setPassword(userDetails.getPassword());
-        return repo.save(user);
+
+        User user = optionalUser.get();
+        user.setName(userInput.getName());
+        user.setEmail(userInput.getEmail());
+        user.setPassword(userInput.getPassword());
+
+        return userRepository.save(user);
     }
 }

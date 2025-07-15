@@ -1,14 +1,14 @@
 # Usa una imagen base de Java
 FROM openjdk:17-jdk-slim
 
-# Crea un directorio para la app
+# Directorio de trabajo dentro del contenedor
 WORKDIR /app
 
-# Copia el jar generado por Maven
+# Copia el JAR al contenedor
 COPY target/user-update-service-1.0.0.jar app.jar
 
-# Expón el puerto del servicio
-EXPOSE 8080
+# Expone el puerto del servicio
+EXPOSE 8081
 
-# Comando para ejecutar el microservicio
+# Comando de inicio
 ENTRYPOINT ["java", "-jar", "app.jar"]

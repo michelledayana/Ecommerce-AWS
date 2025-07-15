@@ -1,6 +1,7 @@
 C:\Users\Michelle Heredia\Desktop\Ecommerce\Backend\userDomain\user_update_service\src\main\java\com\usuario\repository\UserRepository.java
-C:\Users\Michelle Heredia\Desktop\Ecommerce\Backend\userDomain\user_update_service\src\main\java\com\usuario\controller\UserResolver.java
 C:\Users\Michelle Heredia\Desktop\Ecommerce\Backend\userDomain\user_update_service\src\main\java\com\usuario\service\UserService.java
 C:\Users\Michelle Heredia\Desktop\Ecommerce\Backend\userDomain\user_update_service\src\main\java\com\usuario\UserUpdateServiceApplication.java
 C:\Users\Michelle Heredia\Desktop\Ecommerce\Backend\userDomain\user_update_service\src\main\java\com\usuario\model\User.java
+C:\Users\Michelle Heredia\Desktop\Ecommerce\Backend\userDomain\user_update_service\src\main\java\com\usuario\controller\MutationResolver.java
+C:\Users\Michelle Heredia\Desktop\Ecommerce\Backend\userDomain\user_update_service\src\main\java\com\usuario\controller\QueryResolver.java
 C:\Users\Michelle Heredia\Desktop\Ecommerce\Backend\userDomain\user_update_service\src\main\java\com\usuario\dto\UserInput.java

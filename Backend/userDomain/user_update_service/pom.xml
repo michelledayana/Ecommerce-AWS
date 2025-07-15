@@ -17,8 +17,12 @@
   <packaging>jar</packaging>
 
   <name>user-update-service</name>
+
   <properties>
     <java.version>17</java.version>
+    <graphql-java.version>24.0</graphql-java.version>
+    <graphql-java-extended-scalars.version>24.0</graphql-java-extended-scalars.version>
+    <graphql-kickstart.version>11.1.0</graphql-kickstart.version>
   </properties>
 
   <dependencies>
@@ -45,17 +49,47 @@
       <scope>runtime</scope>
     </dependency>
 
-    <!-- GraphQL Dependencies (version 11.1.0) -->
+    <!-- GraphQL Java Core -->
     <dependency>
-  <groupId>com.graphql-java-kickstart</groupId>
-  <artifactId>graphql-java-tools</artifactId>
-  <version>11.1.0</version>
-</dependency>
+      <groupId>com.graphql-java</groupId>
+      <artifactId>graphql-java</artifactId>
+      <version>${graphql-java.version}</version>
+    </dependency>
 
+    <!-- GraphQL Java Extended Scalars -->
+    <dependency>
+      <groupId>com.graphql-java</groupId>
+      <artifactId>graphql-java-extended-scalars</artifactId>
+      <version>${graphql-java-extended-scalars.version}</version>
+    </dependency>
+
+    <!-- GraphQL Spring Boot Starter (Kickstart) -->
+    <dependency>
+      <groupId>com.graphql-java-kickstart</groupId>
+      <artifactId>graphql-spring-boot-starter</artifactId>
+      <version>${graphql-kickstart.version}</version>
+    </dependency>
+
+    <!-- GraphQL Java Tools -->
     <dependency>
       <groupId>com.graphql-java-kickstart</groupId>
       <artifactId>graphql-java-tools</artifactId>
-      <version>11.1.0</version>
+      <version>${graphql-kickstart.version}</version>
+    </dependency>
+
+    <!-- Optional: GraphiQL UI for testing -->
+    <dependency>
+      <groupId>com.graphql-java-kickstart</groupId>
+      <artifactId>graphiql-spring-boot-starter</artifactId>
+      <version>${graphql-kickstart.version}</version>
+      <scope>runtime</scope>
+    </dependency>
+
+    <!-- ANTLR Runtime: necesaria para graphql-java-tools -->
+    <dependency>
+      <groupId>org.antlr</groupId>
+      <artifactId>antlr4-runtime</artifactId>
+      <version>4.9.3</version>
     </dependency>
   </dependencies>
 

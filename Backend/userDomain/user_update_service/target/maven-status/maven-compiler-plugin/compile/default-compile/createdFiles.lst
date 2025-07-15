@@ -1,6 +1,7 @@
+com\usuario\controller\MutationResolver.class
 com\usuario\dto\UserInput.class
 com\usuario\repository\UserRepository.class
 com\usuario\service\UserService.class
 com\usuario\model\User.class
+com\usuario\controller\QueryResolver.class
 com\usuario\UserUpdateServiceApplication.class
-com\usuario\controller\UserResolver.class

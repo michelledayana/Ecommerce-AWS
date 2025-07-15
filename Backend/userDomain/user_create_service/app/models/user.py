@@ -1,5 +1,6 @@
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
+from db import engine  # importa el engine definido en db.py
 
 Base = declarative_base()
 
@@ -9,3 +10,5 @@ class User(Base):
     name = Column(String(100))
     email = Column(String(100), unique=True, index=True)
     password = Column(String(100))
+
+Base.metadata.create_all(bind=engine)  # crea tablas si no existen

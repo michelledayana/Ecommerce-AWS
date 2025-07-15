@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
-from db import engine  # importa el engine definido en db.py
+from app.utils.db import engine  # importa el engine definido en db.py
 
 Base = declarative_base()
 

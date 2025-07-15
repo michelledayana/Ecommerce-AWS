@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from app.routes import user_route
 from app.models.user import Base   # importa Base de tus modelos
-from app.db import engine          # importa engine de la configuración DB
+from app.utils.db import engine          # importa engine de la configuración DB
 
 app = FastAPI()
 

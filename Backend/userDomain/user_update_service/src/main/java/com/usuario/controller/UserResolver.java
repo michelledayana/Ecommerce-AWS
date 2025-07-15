@@ -3,7 +3,7 @@ package com.usuario.controller;
 import com.usuario.dto.UserInput;
 import com.usuario.model.User;
 import com.usuario.service.UserService;
-import com.coxautodev.graphql.tools.GraphQLMutationResolver;
+import graphql.kickstart.tools.GraphQLMutationResolver;
 import org.springframework.stereotype.Component;
 
 @Component

@@ -1,27 +1,35 @@
-# Etapa de construcción
+# Etapa 1: Construcción
 FROM golang:1.20-alpine AS builder
 
 WORKDIR /app
 
-# Copia los archivos necesarios
+# Instala git y ca-certificates necesarios para módulos y HTTPS
+RUN apk add --no-cache git ca-certificates
+
+# Copia los archivos de módulos y descarga dependencias
 COPY go.mod go.sum ./
 RUN go mod download
 
+# Copia el código fuente
 COPY . .
 
-# Construye el binario
-RUN go build -o user-list-service .
+# Construye el binario estático
+RUN CGO_ENABLED=0 GOOS=linux go build -o main .
 
-# Etapa final
-FROM alpine:latest
+# Etapa 2: Imagen final súper liviana
+FROM scratch
 
-WORKDIR /app
+# Copiar el archivo .env
+COPY .env ./
 
-# Copia el binario desde el builder
-COPY --from=builder /app/user-list-service .
+# Copia los certificados SSL para HTTPS si tu app los necesita
+COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 
-# Expone el puerto donde corre la app
-EXPOSE 3013
+# Copia el binario compilado
+COPY --from=builder /app/main /main
 
-# Comando para ejecutar la app
-CMD ["./user-list-service"]
+# Define el puerto que expone la app
+EXPOSE 3010
+
+# Ejecuta el binario
+ENTRYPOINT ["/main"]

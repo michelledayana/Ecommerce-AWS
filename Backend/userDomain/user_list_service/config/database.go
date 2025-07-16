@@ -5,6 +5,7 @@ import (
 	"log"
 	"os"
 
+	"github.com/joho/godotenv"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
@@ -12,19 +13,26 @@ import (
 var DB *gorm.DB
 
 func Connect() {
-	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?parseTime=true",
-		os.Getenv("DB_USER"),
-		os.Getenv("DB_PASSWORD"),
-		os.Getenv("DB_HOST"),
-		os.Getenv("DB_PORT"),
-		os.Getenv("DB_NAME"),
-	)
-
-	database, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
+	err := godotenv.Load()
 	if err != nil {
-		log.Fatalf("Error conectando a la base de datos: %v", err)
+		log.Fatal("Error cargando el archivo .env")
 	}
 
+	user := os.Getenv("DB_USER")
+	password := os.Getenv("DB_PASSWORD")
+	host := os.Getenv("DB_HOST")
+	port := os.Getenv("DB_PORT")
+	dbname := os.Getenv("DB_NAME")
+
+	// Construir la cadena DSN
+	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?parseTime=true", user, password, host, port, dbname)
+
+	// Conectar con GORM
+	database, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
+	if err != nil {
+		log.Fatalf("No se pudo conectar a la base de datos: %v", err)
+	}
+
+	log.Println("Conexión a la base de datos exitosa")
 	DB = database
-	fmt.Println("Conexión a MySQL exitosa")
 }

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions 
+    xmlns="http://schemas.xmlsoap.org/wsdl/" 
+    xmlns:tns="http://example.com/userService" 
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+    targetNamespace="http://example.com/userService">
+
+  <types>
+    <xsd:schema targetNamespace="http://example.com/userService">
+      <xsd:element name="deleteUserRequest">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="id" type="xsd:int" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <xsd:element name="deleteUserResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="success" type="xsd:boolean" />
+            <xsd:element name="message" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+  </types>
+
+  <message name="DeleteUserRequest">
+    <part name="parameters" element="tns:deleteUserRequest" />
+  </message>
+  <message name="DeleteUserResponse">
+    <part name="parameters" element="tns:deleteUserResponse" />
+  </message>
+
+  <portType name="UserServicePortType">
+    <operation name="deleteUser">
+      <input message="tns:DeleteUserRequest" />
+      <output message="tns:DeleteUserResponse" />
+    </operation>
+  </portType>
+
+  <binding name="UserServiceBinding" type="tns:UserServicePortType">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+    <operation name="deleteUser">
+      <soap:operation soapAction="deleteUser"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+
+  <service name="UserService">
+    <port name="UserServicePort" binding="tns:UserServiceBinding">
+      <soap:address location="http://localhost:3012/wsdl"/>
+    </port>
+  </service>
+</definitions>

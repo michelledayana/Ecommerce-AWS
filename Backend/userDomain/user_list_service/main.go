@@ -1,21 +1,28 @@
 package main
 
 import (
+	"log"
+	"os"
+
+	"user-list-service/database"
+	"user-list-service/handlers"
+
 	"github.com/gin-gonic/gin"
-	"user-list-service/config"
-	"user-list-service/controllers"
 )
 
 func main() {
-	// Conectar a la base de datos
-	config.Connect()
+	// Cargar la base de datos
+	db := database.Connect()
 
-	// Auto migrar el modelo
-	config.DB.AutoMigrate(&models.User{})
+	// Iniciar servidor
+	router := gin.Default()
+	router.GET("/users", handlers.GetUsers(db))
 
-	// Crear servidor
-	r := gin.Default()
-	r.GET("/users", controllers.ListUsers)
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "3013"
+	}
 
-	r.Run(":3013") // Puerto definido
+	log.Printf("Servidor corriendo en http://localhost:%s", port)
+	router.Run(":" + port)
 }

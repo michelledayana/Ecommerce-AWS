@@ -23,12 +23,5 @@ COPY --from=builder /app/user-list-service .
 # Expone el puerto donde corre la app
 EXPOSE 3013
 
-# Define la variable de entorno (opcional si usas docker run -e)
-ENV DB_USER=root
-ENV DB_PASSWORD=Dayana2000
-ENV DB_HOST=host.docker.internal
-ENV DB_PORT=3306
-ENV DB_NAME=users_db
-
 # Comando para ejecutar la app
 CMD ["./user-list-service"]

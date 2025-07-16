@@ -1,14 +1,17 @@
-# Usa una imagen base de Java
-FROM openjdk:17-jdk-slim
+# Imagen base oficial de Python
+FROM python:3.13
 
-# Directorio de trabajo dentro del contenedor
+# Establecer el directorio de trabajo en el contenedor
 WORKDIR /app
 
-# Copia el JAR al contenedor
-COPY target/user-update-service-1.0.0.jar app.jar
+# Copiar los archivos del proyecto al contenedor
+COPY . .
 
-# Expone el puerto del servicio
-EXPOSE 8081
+# Instalar las dependencias
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Comando de inicio
-ENTRYPOINT ["java", "-jar", "app.jar"]
+# Exponer el puerto 3011
+EXPOSE 3011
+
+# Comando para ejecutar la app
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "3011"]

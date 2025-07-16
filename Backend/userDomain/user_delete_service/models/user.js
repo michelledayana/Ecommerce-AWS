@@ -9,7 +9,7 @@ const User = sequelize.define('User', {
   },
   name: DataTypes.STRING,
   email: DataTypes.STRING,
-  password: DataTypes.STRING
+  password: DataTypes.STRING,
 }, {
   tableName: 'users',
   timestamps: false

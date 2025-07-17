@@ -2,7 +2,7 @@ package controller
 
 import (
 	"net/http"
-	"user-get-by-id-service/service"
+	"user_get_by_id_service/service"
 
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"

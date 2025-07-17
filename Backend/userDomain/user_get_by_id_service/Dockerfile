@@ -1,35 +1,33 @@
-# Etapa 1: Construcción
-FROM golang:1.20-alpine AS builder
+# Etapa 1: compilar el binario estático
+FROM golang:1.21-alpine AS builder
 
 WORKDIR /app
 
-# Instala git y ca-certificates necesarios para módulos y HTTPS
-RUN apk add --no-cache git ca-certificates
+# Instala git y librerías necesarias para dependencias (si usas GORM con MySQL)
+RUN apk --no-cache add git
 
-# Copia los archivos de módulos y descarga dependencias
 COPY go.mod go.sum ./
 RUN go mod download
 
-# Copia el código fuente
 COPY . .
 
-# Construye el binario estático
-RUN CGO_ENABLED=0 GOOS=linux go build -o main .
+# Compilar el binario de forma estática
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o main .
 
-# Etapa 2: Imagen final súper liviana
+# Etapa 2: imagen final ultra liviana
 FROM scratch
 
-# Copiar el archivo .env
-COPY .env ./
-
-# Copia los certificados SSL para HTTPS si tu app los necesita
-COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
-
-# Copia el binario compilado
+# Copia el binario desde el builder
 COPY --from=builder /app/main /main
 
-# Define el puerto que expone la app
-EXPOSE 3010
+# Copia variables de entorno si lo usas
+COPY --from=builder /app/.env /app/.env
+
+# Establece el directorio de trabajo (opcional)
+WORKDIR /app
+
+# Expone el puerto
+EXPOSE 3013
 
 # Ejecuta el binario
 ENTRYPOINT ["/main"]

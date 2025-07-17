@@ -3,8 +3,8 @@ package main
 import (
 	"log"
 	"os"
-	"user-get-by-id-service/controller"
-	"user-get-by-id-service/database"
+	"user_get_by_id_service/controller"
+	"user_get_by_id_service/database"
 
 	"github.com/gin-gonic/gin"
 )

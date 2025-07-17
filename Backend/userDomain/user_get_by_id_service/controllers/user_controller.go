@@ -1,21 +1,21 @@
-package controllers
+package controller
 
 import (
 	"net/http"
-	"user_list_service/config"
-	"user_list_service/models"
+	"user-get-by-id-service/service"
 
 	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
 )
 
-func GetUsers(c *gin.Context) {
-	var users []models.User
-	result := config.DB.Find(&users)
-
-	if result.Error != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": result.Error.Error()})
-		return
+func GetUserByID(db *gorm.DB) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		id := c.Param("id")
+		user, err := service.GetUserByID(db, id)
+		if err != nil {
+			c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
+			return
+		}
+		c.JSON(http.StatusOK, user)
 	}
-
-	c.JSON(http.StatusOK, users)
 }

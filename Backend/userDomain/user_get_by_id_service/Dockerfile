@@ -26,7 +26,7 @@ COPY --from=builder /app/main .
 COPY --from=builder /app/.env . 
 
 # Exponer el puerto
-EXPOSE 3013
+EXPOSE 3014
 
 # Ejecutar el binario
 ENTRYPOINT ["./main"]

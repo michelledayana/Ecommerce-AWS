@@ -1,0 +1,36 @@
+# 🛠️ user-update-service
+
+**Language:** Python  
+**Framework:** FastAPI  
+**Database:** MySQL  
+**Architecture:** GraphQL API + ORM (SQLAlchemy)
+
+## 📝 Description
+
+This microservice allows **updating the information of an existing user**, such as name, email, or password.  
+It uses GraphQL for flexibility in modifying the user data.
+
+## 🚀 Endpoint
+
+- `POST /graphql`  
+  Allows executing a mutation to update one or more user fields.
+
+## 🛠️ Technologies
+
+- Python 3.11+
+- FastAPI
+- Strawberry GraphQL
+- SQLAlchemy
+- MySQL
+
+## 📁 Project Structure
+
+user-update-service/
+├── app/
+│ ├── main.py
+│ ├── graphql/
+│ ├── models/
+│ ├── schemas/
+│ └── database/
+├── requirements.txt
+└── README.md

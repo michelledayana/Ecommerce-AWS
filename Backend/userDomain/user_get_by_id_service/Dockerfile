@@ -1,9 +1,9 @@
-# Etapa 1: compilar el binario estático
-FROM golang:1.21-alpine AS builder
+# Etapa 1: compilar el binario estático con Go
+FROM golang:1.22-alpine AS builder
 
 WORKDIR /app
 
-# Instala git y librerías necesarias para dependencias (si usas GORM con MySQL)
+# Instala git y librerías necesarias para dependencias
 RUN apk --no-cache add git
 
 COPY go.mod go.sum ./
@@ -12,22 +12,21 @@ RUN go mod download
 COPY . .
 
 # Compilar el binario de forma estática
-RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o main .
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o main main.go
 
-# Etapa 2: imagen final ultra liviana
-FROM scratch
+# Etapa 2: imagen final ligera basada en Alpine
+FROM alpine:latest
 
-# Copia el binario desde el builder
-COPY --from=builder /app/main /main
-
-# Copia variables de entorno si lo usas
-COPY --from=builder /app/.env /app/.env
-
-# Establece el directorio de trabajo (opcional)
 WORKDIR /app
 
-# Expone el puerto
+# Copiar el binario compilado
+COPY --from=builder /app/main .
+
+# Copiar el archivo .env si existe
+COPY --from=builder /app/.env . 
+
+# Exponer el puerto
 EXPOSE 3013
 
-# Ejecuta el binario
-ENTRYPOINT ["/main"]
+# Ejecutar el binario
+ENTRYPOINT ["./main"]

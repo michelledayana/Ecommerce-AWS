@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  user-create:
+    image: dayanaheredia/user_create_service:latest
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./userDomain/user_create_service/.env
+
+  user-update:
+    image: dayanaheredia/user-update-service:latest
+    ports:
+      - "3011:3011"
+    env_file:
+      - ./userDomain/user_update_service/.env
+
+  user-get-by-id:
+    image: dayanaheredia/user-get-by-id-service:latest
+    ports:
+      - "3013:3013"
+    env_file:
+      - ./userDomain/user_get_by_id_service/.env
+
+  user-list:
+    image: dayanaheredia/user-list-service:latest
+    ports:
+      - "3004:3004"
+    env_file:
+      - ./userDomain/user_list_service/.env
+
+  user-delete:
+    image: dayanaheredia/user-delete-service:latest
+    ports:
+      - "3005:3005"
+    env_file:
+      - ./userDomain/user_delete_service/.env

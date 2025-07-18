@@ -8,19 +8,21 @@ const getProductsByName = async (req, res) => {
   }
 
   try {
+    console.log(`Buscando productos con nombre parecido a: %${nameQuery}%`);
     const result = await pool.query(
       `SELECT * FROM products WHERE LOWER(name) LIKE LOWER($1)`,
       [`%${nameQuery}%`]
     );
+    console.log('Resultado de la consulta:', result.rows);
 
     if (result.rows.length === 0) {
       return res.status(404).json({ message: "No products found" });
     }
 
-    res.json(result.rows);
+    return res.json(result.rows);
   } catch (error) {
-    console.error('Error fetching products by name:', error);
-    res.status(500).json({ message: "Internal server error" });
+    console.error('Error en consulta:', error);  // Muestra detalle completo del error en consola
+    return res.status(500).json({ message: "Internal server error" });
   }
 };
 

@@ -1,13 +1,12 @@
 const express = require('express');
-const productRoutes = require('./routes/productRoutes');
+const app = express();
+const productRoutes = require('./app/routes/productRoutes');
 require('dotenv').config();
 
-const app = express();
-const PORT = process.env.PORT || 3022;
-
 app.use(express.json());
-app.use(productRoutes);
+app.use('/api', productRoutes);
 
+const PORT = process.env.PORT || 3018;
 app.listen(PORT, () => {
-  console.log(`product-get-by-name-service running on port ${PORT}`);
+  console.log(`Servidor ejecutándose en http://localhost:${PORT}`);
 });

@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  product_delete_service:
+    image: dayanaheredia/product_delete_by_name_service:latest
+    container_name: product_delete_service_container
+    ports:
+      - "3019:3019"
+    restart: unless-stopped
+
+  product_get_by_name_service:
+    image: dayanaheredia/product_get_by_name_service:latest
+    container_name: product_get_by_name_service_container
+    ports:
+      - "3018:3018"
+    restart: unless-stopped
+
+  product_list_service:
+    image: dayanaheredia/product_list_service:latest
+    container_name: product_list_service_container
+    ports:
+      - "3017:3017"
+    restart: unless-stopped
+
+  product_update_service:
+    image: dayanaheredia/product_update_service:latest
+    container_name: product_update_service_container
+    ports:
+      - "3016:3016"
+    restart: unless-stopped
+
+  product_create_service:
+    image: dayanaheredia/product_create_service:latest
+    container_name: product_create_service_container
+    ports:
+      - "3015:3015"
+    restart: unless-stopped

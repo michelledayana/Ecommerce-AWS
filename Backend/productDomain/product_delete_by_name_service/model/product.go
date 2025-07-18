@@ -1,9 +1,8 @@
 package model
 
 type Product struct {
-	ID          uint    `gorm:"primaryKey"`
-	Name        string  `gorm:"not null"`
-	Description string  `gorm:"not null"`
-	Price       float64 `gorm:"not null"`
-	Stock       int     `gorm:"not null"`
+	ID          uint   `json:"id"`
+	Name        string `json:"name"`
+	Description string `json:"description"`
+	ImagePath   string `json:"image_path"`
 }

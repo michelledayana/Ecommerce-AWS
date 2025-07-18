@@ -1,8 +1,8 @@
 package main
 
 import (
-	"product-delete-by-name-service/controller"
-	"product-delete-by-name-service/database"
+	"product_delete_by_name_service/controller"
+	"product_delete_by_name_service/database"
 
 	"github.com/gin-gonic/gin"
 )
@@ -10,9 +10,8 @@ import (
 func main() {
 	database.Connect()
 
-	router := gin.Default()
+	r := gin.Default()
+	r.DELETE("/products/:name", controller.DeleteProductByNameHandler)
 
-	router.DELETE("/api/products/delete", controller.DeleteProductByName)
-
-	router.Run(":3019")
+	r.Run(":3019")
 }

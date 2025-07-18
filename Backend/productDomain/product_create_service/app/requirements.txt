@@ -1,6 +1,5 @@
 fastapi
 uvicorn
 sqlalchemy
-pymssql
+pyodbc
 python-dotenv
-python-multipart

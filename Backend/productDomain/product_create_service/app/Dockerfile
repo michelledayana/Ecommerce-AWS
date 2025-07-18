@@ -1,13 +1,20 @@
 FROM python:3.13
 
+# Instala las librerías necesarias para pyodbc
+RUN apt-get update && apt-get install -y \
+    unixodbc \
+    unixodbc-dev \
+    gcc \
+    g++ \
+    gnupg \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
 COPY . .
 
 RUN pip install --no-cache-dir -r requirements.txt
-
-RUN mkdir images
 
 EXPOSE 3015
 

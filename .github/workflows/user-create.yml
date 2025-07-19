@@ -5,7 +5,7 @@ on:
     paths:
       - 'Backend/productManagement/userDomain/product_create_service/**'
     branches:
-      -  QA
+      - QA
 
 jobs:
   build-and-deploy:

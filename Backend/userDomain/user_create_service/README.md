@@ -25,17 +25,7 @@ It receives `POST` requests with user data and stores the information in the `us
 
 ## 📁 Project Structure
 
-user-create-service/
-├── app/
-│ ├── controllers/ # Contains the route handlers
-│ ├── models/ # SQLAlchemy database models
-│ ├── schemas/ # Pydantic schemas for request validation
-│ ├── services/ # Business logic for user creation
-│ └── database/ # Database connection setup
-├── main.py # FastAPI entry point
-├── requirements.txt # Python dependencies
-├── .env # Environment variables (DB credentials, etc.)
-└── README.md
+![alt text](image.png)
 
 ## ✅ Responsibilities
 

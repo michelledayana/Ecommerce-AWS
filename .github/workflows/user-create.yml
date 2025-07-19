@@ -26,8 +26,8 @@ jobs:
       - name: 📦 Build and push Docker image
         run: |
           docker build -t ${{ secrets.DOCKER_USERNAME }}/user_create_service:latest \
-            -f Backend/productManagement/userDomain/user_create_service/Dockerfile \
-            Backend/productManagement/userDomain/user_create_service/
+            -f Backend/userDomain/user_create_service/Dockerfile \
+            Backend/userDomain/user_create_service/
           docker push ${{ secrets.DOCKER_USERNAME }}/user_create_service:latest
 
   deploy:

@@ -68,11 +68,11 @@ jobs:
             docker run -d \
               --name user_create_service \
               -p ${{ secrets.SERVER_PORT_CREATE_PRODUCT }}:${{ secrets.SERVER_PORT_CREATE_PRODUCT }} \
-              -e POSTGRES_HOST=${{ secrets.POSTGRES_HOST }} \
-              -e POSTGRES_PORT=${{ secrets.POSTGRES_PORT }} \
-              -e POSTGRES_USER=${{ secrets.POSTGRES_USER }} \
-              -e POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }} \
-              -e POSTGRES_DB=${{ secrets.POSTGRES_DB }} \
+              -e DB_HOST=${{ secrets.DB_HOST }} \
+              -e DB_PORT=${{ secrets.DB_PORT }} \
+              -e DB_USER=${{ secrets.DB_USER}} \
+              -e DB_PASSWORD=${{ secrets.DB_PASSWORD }} \
+              -e DB_NAME=${{ secrets.DB_NAME }} \
               --restart always \
               ${{ secrets.DOCKER_USERNAME }}/user_create_service:latest
 

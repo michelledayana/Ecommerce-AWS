@@ -4,33 +4,33 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"product-update-service/model"
 
+	"github.com/joho/godotenv"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
 
 var DB *gorm.DB
 
-func Connect() *gorm.DB {
-	host := os.Getenv("DB_HOST")
-	user := os.Getenv("DB_USER")
-	password := os.Getenv("DB_PASSWORD")
-	dbname := os.Getenv("DB_NAME")
-	port := os.Getenv("DB_PORT")
-
-	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=disable", host, user, password, dbname, port)
-	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+func Connect() {
+	err := godotenv.Load()
 	if err != nil {
-		log.Fatal("Error al conectar a la base de datos:", err)
+		log.Fatal("Error loading .env file")
 	}
 
-	err = db.AutoMigrate(&model.Product{})
+	dsn := fmt.Sprintf(
+		"host=%s user=%s password=%s dbname=%s port=%s sslmode=disable",
+		os.Getenv("POSTGRES_SERVER"),
+		os.Getenv("POSTGRES_USER"),
+		os.Getenv("POSTGRES_PASSWORD"),
+		os.Getenv("POSTGRES_DB"),
+		os.Getenv("POSTGRES_PORT"),
+	)
+
+	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
-		log.Fatal("Error en migración:", err)
+		log.Fatal("Failed to connect to database:", err)
 	}
 
 	DB = db
-	fmt.Println("Conexión a la base de datos exitosa")
-	return db
 }

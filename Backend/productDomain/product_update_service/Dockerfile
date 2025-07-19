@@ -3,24 +3,25 @@ FROM golang:1.24-alpine AS builder
 
 WORKDIR /app
 
-RUN apk add --no-cache git
-
 COPY go.mod go.sum ./
+RUN apk add --no-cache git
 RUN go mod download
 
 COPY . .
 
-RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o product-update-service ./main.go
+RUN go build -o app
 
-# Etapa final: imagen liviana
+# Etapa final
 FROM alpine:latest
 
-RUN apk add --no-cache ca-certificates
+WORKDIR /app
 
-WORKDIR /root/
+COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
+COPY --from=builder /app/app /app
 
-COPY --from=builder /app/product-update-service .
+# Solo si el archivo .env existe en tu máquina:
+COPY .env /app/.env
 
 EXPOSE 3016
 
-CMD ["./product-update-service"]
+CMD ["./app"]

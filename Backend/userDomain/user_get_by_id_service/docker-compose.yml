@@ -1,0 +1,9 @@
+version: '3.8'
+
+services:
+  user-get-by-id:
+    image: dayanaheredia/user_get_id_service:latest
+    ports:
+      - "3014:3014"
+    env_file:
+      - ./.env

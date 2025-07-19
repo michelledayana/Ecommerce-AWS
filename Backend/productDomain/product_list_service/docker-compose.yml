@@ -1,0 +1,9 @@
+version: '3.8'
+
+services:
+  product_list_service:
+    image: dayanaheredia/product_list_service:latest
+    container_name: product_list_service_container
+    ports:
+      - "3017:3017"
+    restart: unless-stopped

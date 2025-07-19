@@ -1,0 +1,9 @@
+version: '3.8'
+
+services:
+  user-update:
+    image: dayanaheredia/user-update-service:latest
+    ports:
+      - "3011:3011"
+    env_file:
+      - ./.env

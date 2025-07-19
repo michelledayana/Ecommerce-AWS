@@ -1,0 +1,9 @@
+version: '3.8'
+
+services:
+  user-list:
+    image: dayanaheredia/user_login_service:latest
+    ports:
+      - "3014:3014"
+    env_file:
+      - ./.env

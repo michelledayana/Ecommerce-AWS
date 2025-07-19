@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  product_delete_service:
+    image: dayanaheredia/product_delete_by_name_service:latest
+    container_name: product_delete_service_container
+    ports:
+      - "3019:3019"
+    restart: unless-stopped
+
+ 

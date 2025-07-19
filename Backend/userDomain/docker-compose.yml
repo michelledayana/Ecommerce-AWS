@@ -35,3 +35,5 @@ services:
       - "3012:3012"
     env_file:
       - ./user_delete_service/.env
+
+  

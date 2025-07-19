@@ -1,4 +1,4 @@
-# 🛠️ user-update-service
+# user-update-service
 
 **Language:** Python  
 **Framework:** FastAPI  

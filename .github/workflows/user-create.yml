@@ -3,7 +3,7 @@ name: Deploy Product Create Service to AWS
 on:
   push:
     paths:
-      - 'Backend/productManagement/userDomain/user_create_service/**'
+      - 'Backend/userDomain/user_create_service/**'
     branches:
       - QA
 

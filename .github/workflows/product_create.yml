@@ -26,7 +26,7 @@ jobs:
       - name: 📦 Build and push Docker image
         working-directory: Backend/productDomain/product_create_service
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}product_create_service .
+         docker build -t ${{ secrets.DOCKER_USERNAME }}/product_create_service .
           docker push ${{ secrets.DOCKER_USERNAME }}/product_create_service 
 
 

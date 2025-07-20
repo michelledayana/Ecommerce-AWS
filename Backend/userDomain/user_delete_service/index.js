@@ -7,8 +7,7 @@ dotenv.config();
 
 const app = express();
 app.use(express.json());
-//rut1
-
+//ruta
 app.get('/', (req, res) => {
   res.send('Microservicio User Delete activo');
 });

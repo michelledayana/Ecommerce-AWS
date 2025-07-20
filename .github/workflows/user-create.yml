@@ -31,50 +31,50 @@ jobs:
           docker push ${{ secrets.DOCKER_USERNAME }}/user_create_service:latest
 
   deploy:
-  name: Deploy to EC2
-  runs-on: ubuntu-latest
-  needs: build-and-deploy
+    name: Deploy to EC2
+    runs-on: ubuntu-latest
+    needs: build-and-deploy
 
-  steps:
-    - name: 🚀 Connect to EC2 and Deploy Product Create Service
-      uses: appleboy/ssh-action@v1.0.3
-      with:
-        host: ${{ secrets.EC2_HOST_USER_CREATE }}
-        username: ${{ secrets.EC2_USER }}
-        key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
-        port: 22
-        script: |
-          echo "🔍 Verificando si Docker está instalado..."
-          if ! command -v docker &> /dev/null; then
-            echo "📦 Instalando Docker..."
-            sudo yum update -y
-            sudo yum install -y docker
-            sudo service docker start
-            sudo usermod -a -G docker $USER
-            newgrp docker
-          fi
+    steps:
+      - name: 🚀 Connect to EC2 and Deploy Product Create Service
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.EC2_HOST_USER_CREATE }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
+          port: 22
+          script: |
+            echo "🔍 Verificando si Docker está instalado..."
+            if ! command -v docker &> /dev/null; then
+              echo "📦 Instalando Docker..."
+              sudo yum update -y
+              sudo yum install -y docker
+              sudo service docker start
+              sudo usermod -a -G docker $USER
+              newgrp docker
+            fi
 
-          echo "🛑 Deteniendo y eliminando contenedor previo..."
-          docker stop user_create_service || true
-          docker rm user_create_service || true
+            echo "🛑 Deteniendo y eliminando contenedor previo..."
+            docker stop user_create_service || true
+            docker rm user_create_service || true
 
-          echo "🧹 Limpiando imágenes anteriores..."
-          docker image prune -af
+            echo "🧹 Limpiando imágenes anteriores..."
+            docker image prune -af
 
-          echo "📥 Descargando última imagen..."
-          docker pull ${{ secrets.DOCKER_USERNAME }}/user_create_service:latest
+            echo "📥 Descargando última imagen..."
+            docker pull ${{ secrets.DOCKER_USERNAME }}/user_create_service:latest
 
-          echo "🚀 Ejecutando nuevo contenedor..."
-          docker run -d \
-            --name user_create_service \
-            -p ${{ secrets.SERVER_PORT_CREATE_PRODUCT }}:${{ secrets.SERVER_PORT_CREATE_PRODUCT }} \
-            -e DB_HOST=${{ secrets.DB_HOST }} \
-            -e DB_PORT=${{ secrets.DB_PORT }} \
-            -e DB_USER=${{ secrets.DB_USER }} \
-            -e DB_PASSWORD=${{ secrets.DB_PASSWORD }} \
-            -e DB_NAME=${{ secrets.DB_NAME }} \
-            --restart always \
-            ${{ secrets.DOCKER_USERNAME }}/user_create_service:latest
+            echo "🚀 Ejecutando nuevo contenedor..."
+            docker run -d \
+              --name user_create_service \
+              -p ${{ secrets.SERVER_PORT_CREATE_PRODUCT }}:${{ secrets.SERVER_PORT_CREATE_PRODUCT }} \
+              -e DB_HOST=${{ secrets.DB_HOST }} \
+              -e DB_PORT=${{ secrets.DB_PORT }} \
+              -e DB_USER=${{ secrets.DB_USER}} \
+              -e DB_PASSWORD=${{ secrets.DB_PASSWORD }} \
+              -e DB_NAME=${{ secrets.DB_NAME }} \
+              --restart always \
+              ${{ secrets.DOCKER_USERNAME }}/user_create_service:latest
 
-          echo "🔍 Verificando despliegue..."
-          docker ps | grep user_create_service && echo '✅ Despliegue exitoso.' || (echo '❌ Error en despliegue.' && exit 1)
+            echo "🔍 Verificando despliegue..."
+            docker ps | grep user_create_service && echo '✅ Despliegue exitoso.' || (echo '❌ Error en despliegue.' && exit 1)

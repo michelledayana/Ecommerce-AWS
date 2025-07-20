@@ -3,7 +3,7 @@ name: Deploy User Delete service
 on:
   push:
     paths:
-      - 'Backend/userDomain/user_delete_service/**
+      - 'Backend/userDomain/user_delete_service/**'
     branches:
       - QA
 

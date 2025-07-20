@@ -64,7 +64,7 @@ jobs:
 
             echo "🚀 Iniciando contenedor..."
             docker run -d \
-              --name user-delete-service \
+              --name user_get_id_service \
               -p ${{ secrets.SERVER_PORT_GET_USER }}:3013 \
               -e DB_HOST=${{ secrets.DB_HOST }} \
               -e DB_PORT=${{ secrets.DB_PORT }} \

@@ -53,8 +53,8 @@ jobs:
             fi
 
             echo "🛑 Deteniendo contenedor anterior si existe..."
-            docker stop product_update_service || true
-            docker rm product_update_service || true
+            docker stop product_create_service || true
+            docker rm product_create_service || true
 
             echo "🧹 Eliminando imágenes antiguas..."
             docker image prune -af
@@ -62,14 +62,19 @@ jobs:
             echo "📥 Descargando nueva imagen..."
             docker pull ${{ secrets.DOCKER_USERNAME }}/product_create_service:latest
             echo "🚀 Iniciando contenedor..."
+            
             docker run -d \
-              --name product_create_service \
-              -p ${{ secrets.SERVER_PORT_CREATE_PRODUCT}}:3015 \
-              -e POSTGRES_SERVER=${{secrets.POSTGRES_SERVER}}
-              -e POSTGRES_PORT=${{secrets.POSTGRES_PORT}} \
-              -e POSTGRES_USER=${{secrets.POSTGRES_USER}} \
-              -e POSTGRES_PASSWORD=${{secrets.POSTGRES_PASSWORD}} \
-              -e POSTGRES_DB=${{secrets.POSTGRES_DB}}\
-              --restart always \
-              ${{ secrets.DOCKER_USERNAME }}/product_create_service:latest
+             --name product_create_service \
+              -p ${{ secrets.SERVER_PORT_CREATE_PRODUCT }}:3015 \
+               -e POSTGRES_SERVER=${{ secrets.POSTGRES_SERVER }} \
+               -e POSTGRES_PORT=${{ secrets.POSTGRES_PORT }} \
+               -e POSTGRES_USER=${{ secrets.POSTGRES_USER }} \
+                -e POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }} \
+                -e POSTGRES_DB=${{ secrets.POSTGRES_DB }} \
+                 --restart always \
+                   ${{ secrets.DOCKER_USERNAME }}/product_create_service:latest
 
+  
+ 
+
+ 

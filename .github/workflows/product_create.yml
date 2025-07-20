@@ -45,33 +45,34 @@ jobs:
           key: ${{ secrets.EC2_SSH_PRIVATE_KEY_PRODUCT }}
           port: 22
           script: |
-            echo "🔍 Verificando Docker..."
+            echo "🔍 Verificando si Docker está instalado..."
             if ! command -v docker &> /dev/null; then
-              echo "📦 Instalando Docker..."
+              echo "📦 Instalando Docker y Docker Compose..."
               sudo apt-get update -y
               sudo apt-get install -y docker.io docker-compose
               sudo systemctl start docker
               sudo systemctl enable docker
+              sudo usermod -aG docker $USER
             fi
 
             echo "🛑 Deteniendo contenedor anterior si existe..."
             docker stop product_create_service || true
             docker rm product_create_service || true
 
-            echo "🧹 Eliminando imágenes antiguas..."
+            echo "🧹 Eliminando imagen antigua..."
             docker image prune -af
 
-            echo "📥 Descargando nueva imagen..."
+            echo "📥 Descargando nueva imagen desde Docker Hub..."
             docker pull ${{ secrets.DOCKER_USERNAME }}/product_create_service:latest
 
-            echo "🚀 Iniciando contenedor..."
+            echo "🚀 Ejecutando nuevo contenedor..."
             docker run -d \
-            --name product_create_service \
+              --name product_create_service \
               -p ${{ secrets.SERVER_PORT_CREATE_PRODUCT }}:3015 \
               -e POSTGRES_SERVER=${{ secrets.POSTGRES_SERVER }} \
               -e POSTGRES_PORT=${{ secrets.POSTGRES_PORT }} \
               -e POSTGRES_USER=${{ secrets.POSTGRES_USER }} \
               -e POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }} \
               -e POSTGRES_DB=${{ secrets.POSTGRES_DB }} \
-              --restart always \
+              --restart unless-stopped \
               ${{ secrets.DOCKER_USERNAME }}/product_create_service:latest

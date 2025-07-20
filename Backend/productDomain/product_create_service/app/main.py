@@ -26,3 +26,5 @@ async def create_product(
     product_data = schemas.ProductCreate(name=name, description=description, price=price, stock=stock)
     product = crud.create_product(db, product_data)
     return product
+
+#test1

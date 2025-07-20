@@ -8,7 +8,6 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 
-// Ruta raíz para test básico
 app.get('/', (req, res) => {
   res.send('Microservicio User Delete activo');
 });

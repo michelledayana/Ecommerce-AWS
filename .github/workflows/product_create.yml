@@ -65,8 +65,7 @@ jobs:
             docker pull ${{ secrets.DOCKER_USERNAME }}/product_create_service:latest
 
             echo "🚀 Iniciando contenedor..."
-            docker run -d \
-              --name product_create_service \
+            docker run -d --name product_create_service \
               -p ${{ secrets.SERVER_PORT_CREATE_PRODUCT }}:3015 \
               -e POSTGRES_SERVER=${{ secrets.POSTGRES_SERVER }} \
               -e POSTGRES_PORT=${{ secrets.POSTGRES_PORT }} \

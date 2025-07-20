@@ -71,3 +71,4 @@ jobs:
               -e DB_PASSWORD=${{ secrets.DB_PASSWORD }} \
               -e DB_NAME=${{ secrets.DB_NAME }} \
               --restart always \
+              ${{ secrets.DOCKER_USERNAME }}/user_create_service:latest

@@ -26,7 +26,7 @@ jobs:
       - name: 📦 Build and push Docker image
         working-directory: Backend/userDomain/user_delete_service
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/user-delete-service:lastest
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/user-delete-service:lastest .
           docker push ${{ secrets.DOCKER_USERNAME }}/user-delete-service:lastest
 
   deploy:

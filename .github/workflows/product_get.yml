@@ -1,4 +1,4 @@
-name: Deploy Product Delete Service
+name: Deploy Product Get Service
 
 on:
   push:

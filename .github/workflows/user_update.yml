@@ -1,4 +1,4 @@
-name: Deploy User List service 
+name: Deploy User update service
 
 on:
   push:

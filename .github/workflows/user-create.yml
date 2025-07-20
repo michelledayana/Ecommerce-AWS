@@ -1,4 +1,4 @@
-name: Deploy Product Create Service to AWS
+name: Deploy User Create Service to AWS
 
 on:
   push:
@@ -36,35 +36,36 @@ jobs:
     needs: build-and-deploy
 
     steps:
-      - name: Connect to EC2 and Deploy User Create Service
+      - name: 📡 Connect to EC2 and Deploy User Create Service
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.EC2_HOST_USER_CREATE }}
           username: ubuntu
           key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
           script: |
-            echo "🔍 Verificando si Docker está instalado..."
+            echo "🔍 Verificando Docker..."
             if ! command -v docker &> /dev/null; then
               echo "📦 Instalando Docker..."
-              sudo apt-get update -y
-              sudo apt-get install -y docker.io docker-compose
+              sudo apt update -y
+              sudo apt install -y docker.io
               sudo systemctl start docker
+              sudo systemctl enable docker
             fi
 
-            echo "🛑 Deteniendo y eliminando contenedor previo..."
+            echo "🛑 Eliminando contenedor anterior si existe..."
             docker stop user_create_service || true
             docker rm user_create_service || true
 
-            echo "🧹 Limpiando imágenes anteriores..."
+            echo "🧹 Limpiando imágenes antiguas..."
             docker image prune -af
 
-            echo "📥 Descargando última imagen..."
+            echo "📥 Descargando imagen actualizada..."
             docker pull ${{ secrets.DOCKER_USERNAME }}/user_create_service:latest
 
-            echo "🚀 Ejecutando nuevo contenedor..."
+            echo "🚀 Lanzando contenedor actualizado..."
             docker run -d \
               --name user_create_service \
-              -p ${{ secrets.SERVER_PORT_CREATE_PRODUCT }}:${{ secrets.SERVER_PORT_CREATE_PRODUCT }} \
+              -p ${{ secrets.SERVER_PORT_USER_CREATE }}:${{ secrets.SERVER_PORT_USER_CREATE }} \
               -e DB_HOST=${{ secrets.DB_HOST }} \
               -e DB_PORT=${{ secrets.DB_PORT }} \
               -e DB_USER=${{ secrets.DB_USER }} \
@@ -73,5 +74,5 @@ jobs:
               --restart always \
               ${{ secrets.DOCKER_USERNAME }}/user_create_service:latest
 
-            echo "🔍 Verificando despliegue..."
-            docker ps | grep user_create_service && echo '✅ Despliegue exitoso.' || (echo '❌ Error en despliegue.' && exit 1)
+            echo "🔍 Verificación final..."
+            docker ps | grep user_create_service && echo '✅ Despliegue exitoso.' || (echo '❌ Fallo el despliegue.' && exit 1)

@@ -1,4 +1,4 @@
-name: Deploy User Ger service
+name: Deploy User Delete service
 
 on:
   push:

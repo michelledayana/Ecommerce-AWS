@@ -1,4 +1,4 @@
-name: Deploy User Delete service
+name: Deploy User Get service 
 
 on:
   push:

@@ -36,22 +36,19 @@ jobs:
     needs: build-and-deploy
 
     steps:
-      - name: 🚀 Connect to EC2 and Deploy Product Create Service
+      - name: Connect to EC2 and Deploy User Create Service
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.EC2_HOST_USER_CREATE }}
-          username: ${{ secrets.EC2_USER }}
+          username: ubuntu
           key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
-          port: 22
           script: |
             echo "🔍 Verificando si Docker está instalado..."
             if ! command -v docker &> /dev/null; then
               echo "📦 Instalando Docker..."
-              sudo yum update -y
-              sudo yum install -y docker
-              sudo service docker start
-              sudo usermod -a -G docker $USER
-              newgrp docker
+              sudo apt-get update -y
+              sudo apt-get install -y docker.io docker-compose
+              sudo systemctl start docker
             fi
 
             echo "🛑 Deteniendo y eliminando contenedor previo..."
@@ -70,7 +67,7 @@ jobs:
               -p ${{ secrets.SERVER_PORT_CREATE_PRODUCT }}:${{ secrets.SERVER_PORT_CREATE_PRODUCT }} \
               -e DB_HOST=${{ secrets.DB_HOST }} \
               -e DB_PORT=${{ secrets.DB_PORT }} \
-              -e DB_USER=${{ secrets.DB_USER}} \
+              -e DB_USER=${{ secrets.DB_USER }} \
               -e DB_PASSWORD=${{ secrets.DB_PASSWORD }} \
               -e DB_NAME=${{ secrets.DB_NAME }} \
               --restart always \

@@ -1,4 +1,4 @@
-# 📦 Infra Backend Services
+# 📦 Ecommerce AWS
 
 This project is a distributed backend infrastructure composed of microservices written in **Go**, **Python**, and **JavaScript**, connected to **MySQL** and **PostgreSQL** databases. It is designed to be deployed on an **AWS EC2 instance** using Docker containers via `docker-compose`.
 

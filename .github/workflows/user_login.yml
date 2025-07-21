@@ -53,7 +53,7 @@ jobs:
             fi
 
             echo "🛑 Deteniendo contenedor anterior si existe..."
-            docker user_login_service || true
+            docker stop user_login_service || true
             docker rm user_login_service || true
 
             echo "🧹 Eliminando imágenes antiguas..."
